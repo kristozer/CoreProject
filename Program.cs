@@ -14,25 +14,25 @@ namespace CoreProject
 {
     public class Program
     {
-        public static void Main(string[] args)
-        {
-            var host = CreateWebHostBuilder(args)
-                    .Build();
-            using (var scope = host.Services.CreateScope())
+        public static void Main(string[] args)=>
+        //{
+            /*/var host =*/ CreateWebHostBuilder(args)
+                    .Build()
+                    .Run();
+           /*  using (var scope = host.Services.CreateScope())
             {
                 var services = scope.ServiceProvider;
                 try
                 {
                     var context = services.GetRequiredService<Context>();
-                    SeedData.InitializeAsync(context).Wait();
                 }
                 catch(Exception ex)
                 {
                     
                 }
             }
-            host.Run();
-        }
+            host.Run();*/
+       // }
 
         public static IWebHostBuilder CreateWebHostBuilder(string[] args) =>
             WebHost.CreateDefaultBuilder(args)
