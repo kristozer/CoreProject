@@ -6,6 +6,8 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using CoreProject.Models;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Mvc.Rendering;
+using CoreProject.Services;
 
 namespace CoreProject.Controllers
 {
@@ -18,8 +20,8 @@ namespace CoreProject.Controllers
         }
         public async Task<IActionResult> Index(SortState sortOrder = SortState.NameAsc)
         {
-            IQueryable<User> users = db.Users.Include(x=>x.Company);
- 
+            IQueryable<User> users = db.Users.Include(x => x.Company);
+
             switch (sortOrder)
             {
                 case SortState.NameDesc:
@@ -49,6 +51,23 @@ namespace CoreProject.Controllers
             return View(viewModel);
         }
 
+        public ActionResult GetUsers(int? company, string name)
+        {
+            IQueryable<User> users = db.Users.Include(p => p.Company);
+            if ((company ?? 0) != 0)
+                users = users.Where(p => p.CompanyId == company);
+            if (!string.IsNullOrEmpty(name))
+                users = users.Where(p => p.Name.Contains(name));
+                var companies = db.Companies.ToList();
+                companies.Insert(0, new Company{Name= "ВСЕ", Id=0});
+                UsersListViewModel viewModel = new UsersListViewModel()
+                {
+                    Users = users.ToList(),
+                    Companies = new SelectList(companies, "Id", "Name"),
+                    Name = name
+                };
+                return View(viewModel);
+        }
         public IActionResult Privacy()
         {
             return View();
@@ -61,7 +80,7 @@ namespace CoreProject.Controllers
         }
         public IActionResult Person()
         {
-            var p = new Person{Name="TTT", Date=DateTime.Now};
+            var p = new Person { Name = "TTT", Date = DateTime.Now };
             return View(p);
         }
     }
