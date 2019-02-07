@@ -1,5 +1,6 @@
 using Microsoft.EntityFrameworkCore;
-namespace CoreProject.Models
+using CoreProject.Models;
+namespace CoreProject.Data
 {
     public class Context : DbContext
     {

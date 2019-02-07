@@ -11,7 +11,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using CoreProject.Services;
 using CoreProject.Middlewares;
-using CoreProject.Models;
+using CoreProject.Data;
 using Microsoft.EntityFrameworkCore;
 
 namespace CoreProject
