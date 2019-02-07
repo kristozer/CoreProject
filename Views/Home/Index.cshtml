@@ -5,32 +5,5 @@
 @addTagHelper "*, CoreProject"
  
 @{
-    ViewData["Title"] = "Список пользователей";
+    ViewData["Title"] = "Главная";
 }
-<h1>Список пользователей</h1>
-<table class="table">
-    <tr>
-        <th>
-            <sort-header action="Index"  up="@Model.SortViewModel.Up"
-                    current="@Model.SortViewModel.Current" property="@Model.SortViewModel.NameSort">
-                Имя
-            </sort-header>
-        </th>
-        <th>
-            <sort-header action="Index" up="@Model.SortViewModel.Up"
-                    current="@Model.SortViewModel.Current" property="@Model.SortViewModel.AgeSort">
-                Возраст
-            </sort-header>
-        </th>
-        <th>
-            <sort-header action="Index" up="@Model.SortViewModel.Up"
-                    current="@Model.SortViewModel.Current" property="@Model.SortViewModel.CompanySort">
-                Компания
-            </sort-header>
-        </th>
-    </tr>
-    @foreach (User u in Model.Users)
-    {
-        <tr><td>@u.Name</td><td>@u.Age</td><td>@u.Company.Name</td></tr>
-    }
-</table>
