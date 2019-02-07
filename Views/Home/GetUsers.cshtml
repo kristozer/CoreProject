@@ -1,6 +1,7 @@
 @using CoreProject.Models
 @model IndexViewModel
- 
+ @addTagHelper "*, CoreProject"
+
 @{
     ViewData["Title"] = "Users Page";
 }
@@ -41,27 +42,7 @@
         <tr><td>@u.Name</td><td>@u.Age</td><td>@u.Company.Name</td></tr>
     }
 </table>
-@if (Model.PageViewModel.HasPreviousPage)
-{
-    <a asp-action="GetUsers"
-        asp-route-page="@(Model.PageViewModel.PageNumber - 1)"
-        asp-route-name="@(Model.FilterViewModel.SelectedName)"
-        asp-route-company="@(Model.FilterViewModel.SelectedCompany)"
-        asp-route-sortorder="@(Model.SortViewModel.Current)"
-        class="btn btn-default btn">
-            <i class="glyphicon glyphicon-chevron-left"></i>
-            Назад
-    </a>
-}
-@if (Model.PageViewModel.HasNextPage)
-{
-     <a asp-action="GetUsers"
-        asp-route-page="@(Model.PageViewModel.PageNumber + 1)"
-        asp-route-name="@(Model.FilterViewModel.SelectedName)"
-        asp-route-company="@(Model.FilterViewModel.SelectedCompany)"
-        asp-route-sortorder="@(Model.SortViewModel.Current)"
-        class="btn btn-default btn">
-            Вперед
-            <i class="glyphicon glyphicon-chevron-right"></i>
-     </a>
-}
+<page-link page-model="Model.PageViewModel" page-action="GetUsers"
+    page-url-name="@(Model.FilterViewModel.SelectedName)"
+    page-url-company="@(Model.FilterViewModel.SelectedCompany)"
+    page-url-sortorder="@(Model.SortViewModel.Current)"></page-link>

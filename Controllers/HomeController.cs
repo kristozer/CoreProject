@@ -29,7 +29,7 @@ namespace CoreProject.Controllers
         {
             int pageSize = 3;
 
-            IQueryable<User> users = db.Users.Include(p => p.CompanyId == company);
+            IQueryable<User> users = db.Users.Include(p => p.Company);
             if (company != null && company != 0)
             {
                 users = users.Where(p => p.CompanyId == company);
