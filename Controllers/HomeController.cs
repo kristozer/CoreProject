@@ -9,24 +9,35 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using CoreProject.Services;
 using CoreProject.Data;
-
+using Microsoft.Extensions.Logging;
 namespace CoreProject.Controllers
 {
     public class HomeController : Controller
     {
         Context db;
-        public HomeController(Context context)
+        ILogger<HomeController> _log;
+        public HomeController(Context context, ILogger<HomeController> logger)
         {
             this.db = context;
+            _log = logger; 
         }
         public ActionResult Index()
         {
+            db.Users.Add(
+                new User
+                {
+                    Name = "Last",
+                    Company = new Company() { Name = "Last" }
+                }
+            );
+            db.SaveChanges();
             return View();
         }
         [HttpGet]
         public async Task<IActionResult> GetUsers(int? company, string name, int page = 1,
                     SortState sortOrder = SortState.NameAsc)
         {
+            _log.LogInformation("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
             int pageSize = 3;
 
             IQueryable<User> users = db.Users.Include(p => p.Company);
